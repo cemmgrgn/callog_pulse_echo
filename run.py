@@ -54,7 +54,7 @@ def main():
     # make, not something this lock can coordinate across processes it
     # doesn't know about.
     lock = QtCore.QLockFile(
-        QtCore.QDir.tempPath() + "/callog-seshizi.lock")
+        QtCore.QDir.tempPath() + "/callog_pulse_echo.lock")
     lock.setStaleLockTime(0)
     if not lock.tryLock(100):
         QtWidgets.QMessageBox.warning(
