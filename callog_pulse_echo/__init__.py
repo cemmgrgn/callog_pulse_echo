@@ -1,4 +1,4 @@
-"""CalLog Ses Hızı — ultrasonic pulse-echo velocity/thickness measurement.
+"""CalLog Pulse-Echo — ultrasonic pulse-echo velocity/thickness measurement.
 
 Built on `callog_common` (auth, certificates, audit, database, backup — the
 lab-wide infrastructure shared with `callog_defib`). This package adds only

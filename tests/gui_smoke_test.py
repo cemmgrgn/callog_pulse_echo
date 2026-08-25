@@ -949,7 +949,7 @@ def main():
 
     menus = lambda w: [m.title().replace("&", "") for m in w.menuBar().findChildren(
         QtWidgets.QMenu) if m.parent() is w.menuBar()]
-    check("ses hizi sayfasi her rolde var",
+    check("pulse echo sayfasi her rolde var",
           all(w.tabs.index_of("velocity") >= 0 for w in windows.values()))
     check("operator menusunde Yonetim yok", "Yönetim" not in menus(op),
           str(menus(op)))

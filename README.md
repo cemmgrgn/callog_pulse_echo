@@ -1,4 +1,4 @@
-# CalLog Ses Hızı
+# CalLog Pulse-Echo
 
 Darbe-yankı ultrasonik yöntemiyle çelik blokta ses hızı / kalınlık ölçümü
 ve ML kalınlık kestirimi. Kalibrasyon laboratuvarları için bağımsız bir
@@ -13,8 +13,8 @@ sonra Yönetim → Laboratuvar sayfasından girilir ve veritabanında saklanır
 hiçbir kuruma özgü bilgi içermez.
 
 Donanım kurulumu, DPR300 pulser/receiver ayarları ve doğrulama adımları
-için: [`docs/ses-hizi-kurulum.pdf`](docs/ses-hizi-kurulum.pdf) — uygulama
-içinden de **Yardım → Ses hızı kurulum kılavuzu (PDF)**.
+için: [`docs/pulse-echo-kurulum.pdf`](docs/pulse-echo-kurulum.pdf) — uygulama
+içinden de **Yardım → Pulse-Echo kurulum kılavuzu (PDF)**.
 
 ---
 
@@ -23,7 +23,7 @@ içinden de **Yardım → Ses hızı kurulum kılavuzu (PDF)**.
 1. Kullanıcı kendi hesabıyla giriş yapar (kayıt kime ait — izlenebilirliğin temeli)
 2. Kalibrasyona gelen cihazın (DUT) bilgileri elle girilir
 3. Referans osiloskop (Keysight DSOX3012T) otomatik tespit edilir veya elle adres girilir
-4. **Ses hızı** sayfasında cihaz sürekli okunur, her kare hem klasik DSP
+4. **Pulse-Echo** sayfasında cihaz sürekli okunur, her kare hem klasik DSP
    (paket/zarf tespiti, çapraz korelasyon + faz eğimi) hem eğitilmiş bir
    ML modeliyle çözümlenir; "Durdur ve ölç" o kareyi ölçüm olarak kaydeder.
    Cihaz bağlı olmadan da çalışılabilir: "CSV'den yükle…" daha önce
@@ -67,13 +67,13 @@ callog_pulse_echo/
 ├── ml_models.py          Eğitilmiş model yükleme + tahmin
 ├── measure.py             Ekran ölçüm matematiği (Vpp, frekans...)
 ├── setupadvice.py         Canlı ayar önerileri (kırpma, düşük SNR...)
-├── pulse_echo_modes.py    Ses hızı test modunu callog_common.testmodes'a kaydeder
+├── pulse_echo_modes.py    Pulse-Echo test modunu callog_common.testmodes'a kaydeder
 ├── drivers/
 │   ├── keysight_dsox3012t.py, keysight_infiniivision.py
 │   └── simulated_ultrasonic.py
 └── ui/
     ├── main_window.py     callog_common'ın BaseMainWindow'unu genişletir
-    ├── velocity_page.py, velocity_results.py   Ses hızı sayfası
+    ├── velocity_page.py, velocity_results.py   Pulse-Echo sayfası
     └── scope_view.py       Osiloskop ekranı görünümü (bölme ızgarası, imleçler)
 ```
 
@@ -122,9 +122,9 @@ Bu test dosyaları CalLog'un `callog_defib`/`callog_pulse_echo` ayrımından
 işlevini (`WaveformPage`, şok/seri/toplu rapor) sınayan bölümler tamamen
 çıkarıldı — geri kalanı (ortak altyapı: kimlik doğrulama, denetim kaydı,
 sertifika, tema/dil, ölçüm planı, arama...) import yolları düzeltilerek
-korundu. **Ses hızı / ultrasonik özelliğine (`velocity_page.py`,
+korundu. **Pulse-Echo / ultrasonik özelliğine (`velocity_page.py`,
 `ultrasonic.py`, ML model) özgü hiçbir test yok** — bu dosyalar CalLog'a
-ses hızı özelliği eklenmeden önce yazıldığı için hiç yoktu, buraya
+pulse-echo özelliği eklenmeden önce yazıldığı için hiç yoktu, buraya
 taşınırken de eklenmedi. Yeni test yazımı bekliyor.
 
 ## Yeni cihaz eklemek

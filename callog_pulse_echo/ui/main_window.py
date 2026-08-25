@@ -1,4 +1,4 @@
-"""CalLog Ses Hızı's main window: the shared `callog_common` window plus
+"""CalLog Pulse-Echo's main window: the shared `callog_common` window plus
 the velocity page.
 
 Everything else (home, devices, sessions, measurement, approvals, history,
@@ -15,13 +15,13 @@ from .velocity_page import VelocityPage
 
 #: Generic, no institution-specific screenshots — safe under `docs/` and
 #: distributed with the repo, unlike callog_defib's operator guide.
-SETUP_GUIDE_PDF = os.path.join(db.APP_DIR, "docs", "ses-hizi-kurulum.pdf")
+SETUP_GUIDE_PDF = os.path.join(db.APP_DIR, "docs", "pulse-echo-kurulum.pdf")
 
 
 class MainWindow(BaseMainWindow):
 
     def _app_title(self):
-        return "CalLog Ses Hızı"
+        return "CalLog Pulse-Echo"
 
     def _app_version_info(self):
         from .. import __author__, __version__
@@ -38,11 +38,11 @@ class MainWindow(BaseMainWindow):
         return self.velocity
 
     def _extra_page_meta(self):
-        return ("velocity", "Ses hızı", "velocity",
+        return ("velocity", "Pulse-Echo", "velocity",
                 "Darbe/yankı ile canlı izleme ve ölçüm.")
 
     def _extra_page_shortcut_entry(self):
-        return ("velocity", "Ses hızı")
+        return ("velocity", "Pulse-Echo")
 
     def _refresh_extra_appearance(self):
         if self._extra is not None:
@@ -53,5 +53,5 @@ class MainWindow(BaseMainWindow):
             self._extra.shutdown()
 
     def _operator_guides(self):
-        return [("Ses hızı kurulum kılavuzu (PDF)", SETUP_GUIDE_PDF,
-                 "Ses Hızı Ölçümü — Kurulum Kılavuzu")]
+        return [("Pulse-Echo kurulum kılavuzu (PDF)", SETUP_GUIDE_PDF,
+                 "Pulse-Echo Ölçümü — Kurulum Kılavuzu")]

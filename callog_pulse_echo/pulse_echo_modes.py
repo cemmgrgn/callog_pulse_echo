@@ -21,7 +21,7 @@ SOUND_VELOCITY = "sound_velocity"
 #: bir dikey çizgiye ezerdi.
 SOUND_VELOCITY_MODE = testmodes.register_mode(testmodes.TestMode(
     key=SOUND_VELOCITY,
-    label="Ses hızı — darbe/yankı",
+    label="Pulse-Echo — darbe/yankı",
     description=(
         "Bloktan dönen yankı dizisinden ses hızını hesaplar. Tek prob, "
         "darbe-yankı (pulser/receiver ECHO konumunda)."),
