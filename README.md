@@ -15,8 +15,7 @@ sonra Yönetim → Laboratuvar sayfasından girilir ve veritabanında saklanır
 hiçbir kuruma özgü bilgi içermez.
 
 Donanım kurulumu, DPR300 pulser/receiver ayarları ve doğrulama adımları
-için: [`docs/ses-hizi-kurulum.md`](docs/ses-hizi-kurulum.md) /
-[`docs/ses-hizi-kurulum.pdf`](docs/ses-hizi-kurulum.pdf) — uygulama
+için: [`docs/ses-hizi-kurulum.pdf`](docs/ses-hizi-kurulum.pdf) — uygulama
 içinden de **Yardım → Ses hızı kurulum kılavuzu (PDF)**.
 
 ---
@@ -28,7 +27,9 @@ içinden de **Yardım → Ses hızı kurulum kılavuzu (PDF)**.
 3. Referans osiloskop (Keysight DSOX3012T) otomatik tespit edilir veya elle adres girilir
 4. **Ses hızı** sayfasında cihaz sürekli okunur, her kare hem klasik DSP
    (paket/zarf tespiti, çapraz korelasyon + faz eğimi) hem eğitilmiş bir
-   ML modeliyle çözümlenir; "Durdur ve ölç" o kareyi ölçüm olarak kaydeder
+   ML modeliyle çözümlenir; "Durdur ve ölç" o kareyi ölçüm olarak kaydeder.
+   Cihaz bağlı olmadan da çalışılabilir: "CSV'den yükle…" daha önce
+   kaydedilmiş ham dalga CSV'sini okuyup canlı bir kareymiş gibi çözümler
 5. Her şey hash zinciriyle korunan denetim kaydına yazılır; geçmiş
    kayıtlarda arama, lab sorumlusu onayı, Excel'e aktarım
 

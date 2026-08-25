@@ -10,7 +10,6 @@ import os
 
 from callog_common import db
 from callog_common import drivers
-from callog_common import testmodes
 from callog_common import waveform
 from callog_common.qt import Qt
 from callog_common.qt import QtWidgets

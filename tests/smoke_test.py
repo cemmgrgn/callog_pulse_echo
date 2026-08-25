@@ -7,7 +7,6 @@ installed. Verifies the core logic (database, immutability, hash chain,
 statistics, simulation driver, certificate calculation).
 """
 
-import math
 import os
 import sys
 import tempfile

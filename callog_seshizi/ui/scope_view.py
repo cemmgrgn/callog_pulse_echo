@@ -16,7 +16,6 @@ demek ve kayda geçmesi gerekir; ekranı yakınlaştırmak ise sonuca dokunmaz.
 
 from callog_common import theme
 from callog_common.qt import Qt
-from callog_common.qt import QtCore
 from callog_common.qt import QtGui
 from callog_common.qt import QtWidgets
 from callog_common.qt import Signal

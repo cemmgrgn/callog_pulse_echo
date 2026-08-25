@@ -10,6 +10,11 @@ donar ve **ölçüm** olarak kaydedilir. İki akış aynı sayfaya sığdırılm
 CH1. Tek prob, tek kanal.
 """
 
+import csv
+import os
+
+import numpy as np
+
 from callog_common import drivers
 from callog_common import perms
 from callog_common import testmodes
@@ -372,6 +377,11 @@ class VelocityPage(_DiscoveryMixin, _VelocityResultsMixin, PageShell):
         self.stop_btn.setToolTip(
             "Canlı akışı durdurur, ekrandaki kareyi ölçüm olarak alır ve "
             "listeye ekler.")
+        self.load_csv_btn = self.add_action("CSV'den yükle…", self._load_csv)
+        self.load_csv_btn.setToolTip(
+            "Cihazsız da çalışılabilir: daha önce kaydedilmiş ham CSV'yi "
+            "(time_s, CH1_V sütunları) okur ve canlı bir kareymiş gibi "
+            "çözümler.")
         self.add_action_separator()
         self.save_btn = self.add_action("Kaydet", self._save_measurement)
         self.save_btn.setToolTip(
@@ -672,6 +682,36 @@ class VelocityPage(_DiscoveryMixin, _VelocityResultsMixin, PageShell):
         if hasattr(drv, "high_resolution"):
             drv.high_resolution = self.hires_chk.isChecked()
 
+    def _load_csv(self):
+        """Daha önce kaydedilmiş ham CSV'yi ekrandaki kareymiş gibi yükler.
+
+        `waveform.save`'in yazdığı formatla aynı: ilk sütun `time_s`, ardından
+        kanal sütunları (`CH1_V`...). Cihaz bağlı olmadan, geçmiş bir kaydı
+        yeniden çözümlemek veya başka bir kaynaktan gelen veriyi denemek için.
+        """
+        if self.worker is not None and self.worker.isRunning():
+            self.status_label.setText(
+                "Canlı izleme sürerken CSV yüklenemez — önce durdurun.")
+            return
+        path, _filter = QtWidgets.QFileDialog.getOpenFileName(
+            self, "CSV'den yükle", "", "CSV dosyaları (*.csv);;Tüm dosyalar (*.*)")
+        if not path:
+            return
+        try:
+            times, values = _read_waveform_csv(path)
+        except Exception as exc:
+            QtWidgets.QMessageBox.critical(self, "CSV okunamadı", str(exc))
+            return
+        if len(times) == 0:
+            QtWidgets.QMessageBox.warning(
+                self, "CSV boş", "Dosyada okunabilir veri satırı bulunamadı.")
+            return
+        self._frame = (times, values)
+        self._analyze_current(record=True)
+        self.status_label.setText(
+            "CSV yüklendi (%d nokta): %s" % (len(times), os.path.basename(path)))
+        self._update_buttons()
+
     def _on_frame(self, _count, times, columns, _shot):
         values = columns.get("CH1_V")
         if values is None or len(values) == 0:
@@ -874,6 +914,32 @@ class VelocityPage(_DiscoveryMixin, _VelocityResultsMixin, PageShell):
         if std is None:
             return None
         return std / (len(self._history) ** 0.5)
+
+
+def _read_waveform_csv(path):
+    """`time_s, CH1_V[, ...]` başlıklı CSV'yi (times, values) çiftine çevirir.
+
+    Yalnızca ilk kanal sütunu (`CH1_V` varsa o, yoksa ikinci sütun) okunur —
+    bu sayfa tek kanal ile çalışıyor.
+    """
+    times, values = [], []
+    with open(path, "r", newline="", encoding="utf-8-sig") as fh:
+        reader = csv.reader(fh)
+        header = next(reader, None)
+        if not header or len(header) < 2:
+            raise ValueError("Beklenen sütunlar yok (time_s, CH1_V).")
+        value_idx = header.index("CH1_V") if "CH1_V" in header else 1
+        for row in reader:
+            if len(row) <= value_idx:
+                continue
+            try:
+                t = float(row[0])
+                v = float(row[value_idx])
+            except ValueError:
+                continue
+            times.append(t)
+            values.append(v)
+    return np.array(times, dtype=np.float64), np.array(values, dtype=np.float64)
 
 
 def _advice_text(advice):

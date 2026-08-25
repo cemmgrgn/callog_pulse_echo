@@ -8,11 +8,9 @@ to Excel. Goal: catch runtime errors in the UI code (wrong Qt call, missing
 signal, type error).
 """
 
-import json
 import os
 import sys
 import tempfile
-import time
 
 os.environ.setdefault("QT_QPA_PLATFORM", "offscreen")
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
