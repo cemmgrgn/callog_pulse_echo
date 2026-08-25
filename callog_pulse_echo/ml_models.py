@@ -6,6 +6,7 @@ ve kalınlık / ses hızı tahmini yapar.
 """
 
 import os
+import sys
 import time
 import numpy as np
 import pandas as pd
@@ -25,9 +26,20 @@ AVAILABLE_MODELS = (
 
 
 def get_model_path(filename):
-    """Proje kök dizinindeki dataset/models/ yolunu bulur."""
-    current_dir = os.path.dirname(os.path.abspath(__file__))
-    project_root = os.path.abspath(os.path.join(current_dir, ".."))
+    """Proje kök dizinindeki dataset/models/ yolunu bulur.
+
+    PyInstaller ile paketlenmişse `__file__` gerçek bir disk yolu değil,
+    dondurulmuş arşivin içini gösterir. Model dosyası salt-okunur,
+    uygulamayla birlikte paketlenen bir kaynak (kullanıcı verisi değil —
+    onun için db.py `sys.executable`'ın yanını kullanıyor); paketlenmiş
+    kaynaklar için PyInstaller'ın kendi çözümü `sys._MEIPASS`, hem
+    --onefile hem --onedir'de doğru yeri gösterir.
+    """
+    if getattr(sys, "frozen", False):
+        project_root = sys._MEIPASS
+    else:
+        current_dir = os.path.dirname(os.path.abspath(__file__))
+        project_root = os.path.abspath(os.path.join(current_dir, ".."))
     return os.path.join(project_root, "dataset", "models", filename)
 
 

@@ -11,6 +11,10 @@ __pycache__/
 # yedekler ve kuruma özgü logo/kılavuz (data/yerel/) burada durur.
 data/
 
+# Eğitilmiş ML modeli: bu depoda tutulmuyor, pulse_echo-ml'den elle
+# kopyalanıyor (bkz. README "ML modeli").
+dataset/
+
 # Ortam değişkenleri / gizli bilgi (şu an kullanılmıyor, önlem amaçlı)
 .env
 .env.*
