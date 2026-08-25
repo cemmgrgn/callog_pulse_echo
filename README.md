@@ -51,7 +51,7 @@ python run.py
 `[SİMÜLASYON] Keysight DSOX3012T` seçin. Sentetik yankı dizisi üretilir;
 kalınlığı değiştirdikçe yankı aralığı da değişir.
 
-**ML modeli:** `callog_seshizi/ml_models.py`, `dataset/models/*.pkl`
+**ML modeli:** `callog_pulse_echo/ml_models.py`, `dataset/models/*.pkl`
 dosyalarını çalışma zamanında yükler. Bu depoda henüz eğitilmiş bir model
 yok — model dosyaları ayrı bir depoda ([`pulse_echo-ml`](https://github.com/cemmgrgn/pulse_echo-ml))
 eğitilip buradaki `dataset/models/` altına elle kopyalanmalı; yoksa arayüz
@@ -61,13 +61,13 @@ sessizce Klasik DSP'ye geri döner.
 
 ```
 callog_common/          Paylaşılan altyapı — bkz. aşağıdaki "Bağımlılık" bölümü
-callog_seshizi/
+callog_pulse_echo/
 ├── ultrasonic.py         DSP çözümleme: paket tespiti, çapraz korelasyon + faz eğimi
 ├── feature_extraction.py Öznitelik çıkarımı (ML modeli için)
 ├── ml_models.py          Eğitilmiş model yükleme + tahmin
 ├── measure.py             Ekran ölçüm matematiği (Vpp, frekans...)
 ├── setupadvice.py         Canlı ayar önerileri (kırpma, düşük SNR...)
-├── seshizi_modes.py       Ses hızı test modunu callog_common.testmodes'a kaydeder
+├── pulse_echo_modes.py    Ses hızı test modunu callog_common.testmodes'a kaydeder
 ├── drivers/
 │   ├── keysight_dsox3012t.py, keysight_infiniivision.py
 │   └── simulated_ultrasonic.py
@@ -117,7 +117,7 @@ elle set etmeye gerek yok.)
 ekransız (offscreen) test ortamının font metrikleriyle ilgili görünüyor.
 Gerçek ekranda ayrıca doğrulanmadı.
 
-Bu test dosyaları CalLog'un `callog_defib`/`callog_seshizi` ayrımından
+Bu test dosyaları CalLog'un `callog_defib`/`callog_pulse_echo` ayrımından
 önceki, tek-uygulama dönemine ait; bu depoda **var olmayan** defibrilatör
 işlevini (`WaveformPage`, şok/seri/toplu rapor) sınayan bölümler tamamen
 çıkarıldı — geri kalanı (ortak altyapı: kimlik doğrulama, denetim kaydı,
@@ -129,8 +129,8 @@ taşınırken de eklenmedi. Yeni test yazımı bekliyor.
 
 ## Yeni cihaz eklemek
 
-1. `callog_seshizi/drivers/` altında `callog_common.drivers.base.Driver`'ı
+1. `callog_pulse_echo/drivers/` altında `callog_common.drivers.base.Driver`'ı
    miras alan bir modül yaz
-2. `callog_seshizi/__init__.py`'den `drivers.register_driver()` ile kaydet
+2. `callog_pulse_echo/__init__.py`'den `drivers.register_driver()` ile kaydet
 3. Otomatik tespit için `callog_common/drivers/discovery.py`'deki
    `KNOWN_MODELS`'e marka/model desenini ekle

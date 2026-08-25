@@ -18,7 +18,7 @@ openpyxl>=3.1          # Excel dışa aktarım
 python-docx>=1.1       # Word (.docx) çıktı
 rlPyCairo>=0.3         # Grafiğin PNG'ye çevrilmesi (DOCX için)
 
-# Ses hızı / kalınlık ölçümü — ML modeli (callog_seshizi/ml_models.py)
+# Ses hızı / kalınlık ölçümü — ML modeli (callog_pulse_echo/ml_models.py)
 pandas>=2.0
 scikit-learn>=1.3      # Eğitilmiş model (joblib ile yüklenir)
 joblib>=1.3

@@ -15,6 +15,7 @@ from callog_common.qt import Qt
 from callog_common.qt import QtWidgets
 from callog_common.ui.util import empty_state
 from callog_common.ui.util import fit_table
+from .. import pulse_echo_modes
 from .. import ultrasonic
 
 
@@ -177,8 +178,8 @@ class _VelocityResultsMixin:
                 instrument_id=inst["id"],
                 operator_id=self.state.user["id"],
                 dut_id=self.dut_combo.currentData(),
-                prefix="seshizi",
-                test_mode=seshizi_modes.SOUND_VELOCITY,
+                prefix="velocity",
+                test_mode=pulse_echo_modes.SOUND_VELOCITY,
                 setup=self._setup_snapshot(),
                 analysis=analysis,
                 is_simulated=drivers.is_simulated(inst["driver"]),
@@ -220,7 +221,7 @@ class _VelocityResultsMixin:
         rows = db.query(
             "SELECT * FROM waveform_captures"
             " WHERE test_mode = ? ORDER BY id DESC LIMIT 200",
-            (seshizi_modes.SOUND_VELOCITY,))
+            (pulse_echo_modes.SOUND_VELOCITY,))
         for r in rows:
             i = self.measure_table.rowCount()
             self.measure_table.insertRow(i)
@@ -264,7 +265,7 @@ class _VelocityResultsMixin:
             self, "Dışa aktarılacak klasör")
         if not target:
             return
-        folder = os.path.join(target, "seshizi_%s" % self._series_id)
+        folder = os.path.join(target, "velocity_%s" % self._series_id)
         os.makedirs(folder, exist_ok=True)
 
         summary_path = os.path.join(folder, "ozet.csv")

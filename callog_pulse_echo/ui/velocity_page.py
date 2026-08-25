@@ -29,7 +29,7 @@ from callog_common.ui.page_shell import PageShell
 from callog_common.ui.page_shell import field_label
 from callog_common.ui.waveform_discovery import _DiscoveryMixin
 from .. import setupadvice
-from .. import seshizi_modes
+from .. import pulse_echo_modes
 from .. import ultrasonic
 from .. import ml_models
 from .scope_view import ScopeView
@@ -416,7 +416,7 @@ class VelocityPage(_DiscoveryMixin, _VelocityResultsMixin, PageShell):
 
     # --- _DiscoveryMixin'in beklediği kancalar ---------------------------
     def current_mode(self):
-        return testmodes.get(seshizi_modes.SOUND_VELOCITY)
+        return testmodes.get(pulse_echo_modes.SOUND_VELOCITY)
 
     def _on_instrument_changed(self):
         """Karışıklık olmasın diye mixin'inki yerine geçiyor.
@@ -523,7 +523,7 @@ class VelocityPage(_DiscoveryMixin, _VelocityResultsMixin, PageShell):
 
     def _timebase(self):
         reference = self._reference_velocity() or 6320.0
-        return seshizi_modes.timebase_for(self._thickness_m(), reference,
+        return pulse_echo_modes.timebase_for(self._thickness_m(), reference,
                                       echoes=self.echoes_spin.value())
 
     def _sync_points(self):

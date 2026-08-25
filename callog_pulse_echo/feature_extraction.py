@@ -14,7 +14,7 @@ import scipy.fft
 from scipy.stats import skew, kurtosis
 from concurrent.futures import ThreadPoolExecutor
 
-import callog_seshizi.ultrasonic as ultrasonic
+import callog_pulse_echo.ultrasonic as ultrasonic
 
 
 def load_waveform(row, base_dir=None):

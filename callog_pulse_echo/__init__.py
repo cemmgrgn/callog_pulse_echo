@@ -14,7 +14,7 @@ does it on startup).
 
 from callog_common import drivers as _drivers
 
-from . import seshizi_modes  # noqa: F401  (registers the sound_velocity mode)
+from . import pulse_echo_modes  # noqa: F401  (registers the sound_velocity mode)
 from .drivers.keysight_dsox3012t import KeysightDSOX3012T
 from .drivers.simulated_ultrasonic import SimulatedUltrasonic
 

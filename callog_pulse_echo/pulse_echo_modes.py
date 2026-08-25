@@ -1,6 +1,6 @@
 """Registers this app's test mode into the shared `testmodes` registry.
 
-Importing this module (done once, from `callog_seshizi/__init__.py`) is
+Importing this module (done once, from `callog_pulse_echo/__init__.py`) is
 what makes `testmodes.MODES`/`testmodes.get()` know about the sound-velocity
 mode — the registry itself lives in `callog_common.testmodes` and knows
 nothing about ultrasonic measurement specifically. See

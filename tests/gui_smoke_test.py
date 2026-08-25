@@ -64,7 +64,7 @@ def main():
     # --- 1. Window and page setup --------------------------
     print("1. Arayuz kurulumu")
     from callog_common.ui.login import LoginDialog, NewUserDialog
-    from callog_seshizi.ui.main_window import MainWindow
+    from callog_pulse_echo.ui.main_window import MainWindow
 
     win = MainWindow(user)
     check("ana pencere kuruldu", win is not None)

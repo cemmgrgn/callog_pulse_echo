@@ -36,11 +36,11 @@ def _install_excepthook():
 
 
 def main():
-    import callog_seshizi  # noqa: F401  (registers the sound_velocity mode + drivers)
+    import callog_pulse_echo  # noqa: F401  (registers the sound_velocity mode + drivers)
     from callog_common import audit, db, theme
     from callog_common.qt import QtCore, QtWidgets
     from callog_common.ui.login import LoginDialog
-    from callog_seshizi.ui.main_window import MainWindow
+    from callog_pulse_echo.ui.main_window import MainWindow
 
     app = QtWidgets.QApplication(sys.argv)
     app.setApplicationName("CalLog Ses Hızı")

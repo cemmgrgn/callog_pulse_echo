@@ -6,7 +6,7 @@ imleçle elle ölçülen Δt, otomatik çözümlemenin sonucunu **bağımsız ol
 doğrulamanın tek yolu. Çözümleme yanlış çevrimi seçtiğinde bunu ancak
 imleçle bakınca fark edersiniz.
 
-Ölçüm matematiği burada değil, `callog_seshizi/measure.py` içinde: aynı "Vpp"
+Ölçüm matematiği burada değil, `callog_pulse_echo/measure.py` içinde: aynı "Vpp"
 tanımının hem ekranda hem raporda hem testte geçerli olması için.
 
 Görünüm cihazdan bağımsız: dikey/yatay ölçek yalnızca **ekranı** değiştirir,
