@@ -1,11 +1,9 @@
 # CalLog Ses Hızı
 
 Darbe-yankı ultrasonik yöntemiyle çelik blokta ses hızı / kalınlık ölçümü
-ve ML kalınlık kestirimi. Kalibrasyon laboratuvarları için ölçüm kayıt
-sistemi **CalLog**'un iki uygulamasından biri — sertifika/denetim/kullanıcı
-altyapısını [`callog-defib`](https://github.com/cemmgrgn/callog-defib)
-(defibrilatör dalga ölçümü) ile paylaşır, ama tamamen bağımsız bir kurulum
-ve depo: biri olmadan diğeri klonlanabilir, kurulabilir ve çalıştırılabilir.
+ve ML kalınlık kestirimi. Kalibrasyon laboratuvarları için bağımsız bir
+ölçüm kayıt sistemi — kurulum ve depo tek başına yeterli, başka bir
+depoya ihtiyaç duymaz.
 
 Geliştiren: **Cem Girgin**  ·  Lisans: [Özel Kullanım Lisansı](LICENSE)
 
@@ -55,10 +53,9 @@ kalınlığı değiştirdikçe yankı aralığı da değişir.
 
 **ML modeli:** `callog_seshizi/ml_models.py`, `dataset/models/*.pkl`
 dosyalarını çalışma zamanında yükler. Bu depoda henüz eğitilmiş bir model
-yok — eğitim verisi ve defterleri ayrı bir depoda:
-[`seshizi-ml`](https://github.com/cemmgrgn/seshizi-ml). Model dosyaları
-oradan `dataset/models/` altına elle kopyalanmalı; yoksa arayüz sessizce
-Klasik DSP'ye geri döner.
+yok — model dosyaları ayrı bir depoda ([`pulse_echo-ml`](https://github.com/cemmgrgn/pulse_echo-ml))
+eğitilip buradaki `dataset/models/` altına elle kopyalanmalı; yoksa arayüz
+sessizce Klasik DSP'ye geri döner.
 
 ## Dosya düzeni
 
@@ -80,31 +77,39 @@ callog_seshizi/
     └── scope_view.py       Osiloskop ekranı görünümü (bölme ızgarası, imleçler)
 ```
 
-## Bağımlılık: `callog_common/`
+## `callog_common/`
 
 Kullanıcı/rol yönetimi, sertifika üretimi, denetim kaydı, veritabanı
 şeması, yedekleme, tema ve dil, ölçüm oturumu akışı gibi laboratuvar
-altyapısının tamamı `callog_common/` altında — bu, aynı kodun
-[`callog-defib`](https://github.com/cemmgrgn/callog-defib) deposunda da
-**bir kopyası** olarak duruyor. Bu depoyu `callog-defib`'e bağımlı
-kılmamak için kopyalandı; canlı bir bağlantı değil.
+altyapısının tamamı `callog_common/` altında — bu paylaşılan altyapı,
+kardeş bir uygulamada da kullanılan ayrı bir kopya olarak burada duruyor
+(canlı bir bağlantı/bağımlılık değil).
 
 **Bunun bedeli:** `callog_common`'da ileride bir hata düzeltilirse bu
-depodaki kopya kendiliğinden güncellenmez — elle senkronize edilmeli.
+depodaki kopya kendiliğinden güncellenmez, elle senkronize edilmeli.
 
-`callog_common/ui/approvals_page.py` ve `devices_page.py`,
-`callog-defib`'e özgü rapor kodunu (`seriesreport`, `summaryreport`)
-**isteğe bağlı** olarak içe aktarmaya çalışır (`try/except ImportError`)
-— bu depoda `callog-defib` bulunmadığı için ilgili ekran nazikçe "bu
-kurulumda görüntülenemiyor" der; onay kuyruğunun kendisi (aynı veritabanı,
-aynı `certificates` tablosu paylaşılıyorsa) yine de çalışır.
+`callog_common/ui/approvals_page.py` ve `devices_page.py`, bu depoda
+bulunmayan bir rapor koduna (`seriesreport`, `summaryreport`) **isteğe
+bağlı** olarak içe aktarmaya çalışır (`try/except ImportError`) — ilgili
+ekran nazikçe "bu kurulumda görüntülenemiyor" der; onay kuyruğunun
+kendisi (aynı veritabanı paylaşılıyorsa) yine de çalışır.
 
 ## Test
 
 ```bash
-python tests/smoke_test.py       # Qt/pyvisa/reportlab gerektirmez
-python tests/gui_smoke_test.py   # ekransız çalışır
+python tests/smoke_test.py       # pyvisa/reportlab gerektirmez, ama PySide6 kurulu olmalı
+python tests/gui_smoke_test.py   # ekransız (offscreen) çalışır
 ```
+
+Windows'ta ekransız Qt platformu bazen sistem fontlarını bulamaz; bu durumda
+her iki testten önce şunu ayarlayın:
+
+```bash
+set QT_QPA_FONTDIR=C:\Windows\Fonts
+```
+
+(`gui_smoke_test.py` `QT_QPA_PLATFORM=offscreen`'i kendi içinde ayarlar,
+elle set etmeye gerek yok.)
 
 `smoke_test.py`: 188/188. `gui_smoke_test.py`: 312/313 — kalan tek başarısızlık
 (`kararlilik seridi en genis satir degil`), bu depoda hiç değiştirilmemiş
